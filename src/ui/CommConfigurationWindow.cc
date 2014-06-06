@@ -108,7 +108,7 @@ CommConfigurationWindow::CommConfigurationWindow(LinkInterface* link, ProtocolIn
     // Create configuration action for this link
     // Connect the current UAS
     action = new QAction(QIcon(":/files/images/devices/network-wireless.svg"), "", this);
-    LinkManager::instance()->add(link);
+    LinkManager::instance()->addLink(link);
 	action->setData(link->getId());
     action->setEnabled(true);
     action->setVisible(true);
@@ -141,6 +141,17 @@ CommConfigurationWindow::CommConfigurationWindow(LinkInterface* link, ProtocolIn
     // TODO Move these calls to each link so that dynamic casts vanish
 
     // Open details pane for serial link if necessary
+
+    if (link->getLinkType() == LinkInterface::SERIAL_LINK)
+    {
+        QWidget* conf = new SerialConfigurationWindow(link, this);
+        ui.linkScrollArea->setWidget(conf);
+        ui.linkGroupBox->setTitle(tr("Serial Link"));
+        ui.linkType->setCurrentIndex(ui.linkType->findData(QGC_LINK_SERIAL));
+        connect(ui.advCheckBox,SIGNAL(clicked(bool)),conf,SLOT(setAdvancedSettings(bool)));
+
+    }
+
     SerialLink* serial = dynamic_cast<SerialLink*>(link);
     if(serial != 0) {
         QWidget* conf = new SerialConfigurationWindow(serial, this);

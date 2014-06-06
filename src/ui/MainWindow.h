@@ -40,7 +40,7 @@ This file is part of the QGROUNDCONTROL project
 #include <qlist.h>
 
 #include "ui_MainWindow.h"
-#include "LinkManager.h"
+//#include "LinkManager.h"
 #include "LinkInterface.h"
 #include "UASInterface.h"
 #include "UASManager.h"
@@ -270,10 +270,10 @@ public:
         return logPlayer;
     }
 
-    MAVLinkProtocol* getMAVLink()
-    {
-        return mavlink;
-    }
+    //MAVLinkProtocol* getMAVLink()
+    //{
+    //    return mavlink;
+    //}
 
 protected:
 
@@ -345,7 +345,7 @@ protected:
     void storeSettings();
 
     // TODO Should be moved elsewhere, as the protocol does not belong to the UI
-    QPointer<MAVLinkProtocol> mavlink;
+    //QPointer<MAVLinkProtocol> mavlink;
 
     QPointer<MAVLinkSimulationLink> simulationLink;
     QPointer<LinkInterface> udpLink;

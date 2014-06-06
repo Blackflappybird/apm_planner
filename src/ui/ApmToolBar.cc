@@ -355,9 +355,9 @@ void APMToolBar::showConnectionDialog()
 
 void APMToolBar::updateLinkDisplay(LinkInterface* link)
 {
-    if (!qobject_cast<SerialLink*>(link))
+    if (!qobject_cast<SerialLinkInterface*>(link))
     {
-        //We only want to operate on serial links
+        //We only want to operate on serial link interfaces
         return;
     }
     QLOG_DEBUG() << "APMToolBar: updateLinkDisplay";
@@ -372,12 +372,13 @@ void APMToolBar::updateLinkDisplay(LinkInterface* link)
         object->setProperty("linkNameLabel", linkName);
 
         setConnection(link->isConnected());
+        QLOG_DEBUG() << "APMToolBar: updateLinkDisplay" << link->getConnectionSpeed() << link->getName() << link->isConnected();
     }
 }
 
 void APMToolBar::newLinkCreated(LinkInterface* newLink)
 {
-    SerialLink* sLink = dynamic_cast<SerialLink*>(newLink);
+    SerialLinkInterface* sLink = dynamic_cast<SerialLinkInterface*>(newLink);
     if(sLink) {
         QLOG_DEBUG() << "APMToolBar: new Serial Link Created" << newLink;
         m_currentLink = sLink;

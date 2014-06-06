@@ -248,7 +248,7 @@ void SerialConfigurationWindow::setupPortList()
 {
     if (!link) return;
 
-    QLOG_DEBUG() << "SCW: Link is connected " << link->isConnected();
+    QLOG_DEBUG() << "SCW: Link is" << ((link->isConnected()) ? "connected" : "disconnected");
 
     // Get the ports available on this system
     QList<QString> ports = link->getCurrentPorts();
@@ -260,8 +260,6 @@ void SerialConfigurationWindow::setupPortList()
     disconnect(ui.portName, SIGNAL(editTextChanged(QString)), this, SLOT(setPortName(QString)));
     disconnect(ui.portName, SIGNAL(currentIndexChanged(QString)), this, SLOT(setPortName(QString)));
     ui.portName->clear();
-    connect(ui.portName, SIGNAL(editTextChanged(QString)), this, SLOT(setPortName(QString)));
-    connect(ui.portName, SIGNAL(currentIndexChanged(QString)), this, SLOT(setPortName(QString)));
 
     for (int i = ports.count() - 1; i >= 0; --i)
     {
@@ -284,6 +282,9 @@ void SerialConfigurationWindow::setupPortList()
         //ui.portName->setEditText(storedName);
         ui.portName->setCurrentIndex(index);
     }
+    connect(ui.portName, SIGNAL(editTextChanged(QString)), this, SLOT(setPortName(QString)));
+    connect(ui.portName, SIGNAL(currentIndexChanged(QString)), this, SLOT(setPortName(QString)));
+
 }
 
 void SerialConfigurationWindow::enableFlowControl(bool flow)

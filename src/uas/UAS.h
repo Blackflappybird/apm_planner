@@ -773,6 +773,12 @@ public:
     bool isHelicopter();
 
 public slots:
+
+    void protocolStatusMessageRec(const QString& title, const QString& message);
+    void valueChangedRec(const int uasId, const QString& name, const QString& unit, const QVariant& value, const quint64 msec);
+    void textMessageReceivedRec(int uasid, int componentid, int severity, const QString& text);
+    void receiveLossChangedRec(int id,float value);
+
     /** @brief Set the autopilot type */
     void setAutopilotType(int apType)
     {
